@@ -2,10 +2,12 @@ package gui;
 
 
 import java.net.URL;
-import java.nio.channels.IllegalSelectorException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DbException;
+import gui.listerners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
@@ -25,6 +27,8 @@ public class DepartmentFormController implements Initializable {
 	
 	private DepartmentService service;
 
+	private List<DataChangeListener> dataChangeListernes = new ArrayList<>();
+	
 	@FXML
 	private TextField txtId;
 	
@@ -47,6 +51,11 @@ public class DepartmentFormController implements Initializable {
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
 	}
+	
+	public void subscrebeDataChangeListener(DataChangeListener listener) {
+		dataChangeListernes.add(listener);
+	}
+	
 	@FXML
 	public void onBtSaveAction(ActionEvent event) {
 		if (entity == null) {
@@ -58,6 +67,7 @@ public class DepartmentFormController implements Initializable {
 		try {
 			entity = getFormData();
 			service.saverOrUpdate(entity);
+			notifyDataChangeListeners();
 			Utils.correntSatge(event).close();
 			System.out.println("onBtSaveAction");
 		}
@@ -66,6 +76,13 @@ public class DepartmentFormController implements Initializable {
 		}
 	}
 	
+	private void notifyDataChangeListeners() {
+		for (DataChangeListener listener : dataChangeListernes) {
+			listener.onDataChanged();
+		}
+		
+	}
+
 	private Department getFormData() {
 		Department obj  = new Department();
 		
