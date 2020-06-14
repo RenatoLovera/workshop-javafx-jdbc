@@ -16,10 +16,15 @@ public class DepartmentService {
 
 	public void saverOrUpdate(Department obj) {
 	if (obj.getId() == null) {
-		dao.insert(obj);
+			dao.insert(obj);
+		}
+		else {
+				dao.update(obj);
+		}
 	}
-	else {
-		dao.update(obj);
+	
+	public void remove(Department obj) {
+		dao.deleteById(obj.getId());
 	}
-	}
+	
 }
