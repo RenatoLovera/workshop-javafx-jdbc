@@ -1,16 +1,16 @@
 package model.dao.impl;
 
-import java.beans.Statement;
+//import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+//import com.postgresql.jdbc.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-//import com.postgresql.jdbc.Statement;
 
 import db.DB;
 import db.DbException;
@@ -35,7 +35,9 @@ public class SellerDaoJDBC implements SellerDao {
 					+ "(Name, Email, BirthDate, BaseSalary, DepartmentId) "
 					+ "VALUES "
 					+ "(?, ?, ?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
+			        	Statement.RETURN_GENERATED_KEYS);
+			
+					    //Statement .RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getEmail());
@@ -137,17 +139,42 @@ public class SellerDaoJDBC implements SellerDao {
 			DB.closeResultSet(rs);
 		}
 	}
-
 	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
 		Seller obj = new Seller();
 		obj.setId(rs.getInt("Id"));
 		obj.setName(rs.getString("Name"));
 		obj.setEmail(rs.getString("Email"));
 		obj.setBaseSalary(rs.getDouble("BaseSalary"));
-		obj.setBirthDate(rs.getDate("BirthDate"));
+		obj.setBirthDate(new java.util.Date(rs.getTimestamp("BirthDate").getTime()));
+	//	obj.setBirthDate(rs.getDate("BirthDate"));
+		
+	///obj.setBirthDate(new java.sql.Date(rs.getTimestamp("BirthDate").getTime()));
+		
+	//	 System.out.println(new java.util.Date(rs.getTimestamp("BirthDate").getTime())); 
 		obj.setDepartment(dep);
 		return obj;
 	}
+//	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+//		Seller obj = new Seller();
+//		obj.setId(rs.getInt("Id"));
+//		obj.setName(rs.getString("Name"));
+//		obj.setEmail(rs.getString("Email"));
+//		obj.setBaseSalary(rs.getDouble("BaseSalary"));
+//		
+//		obj.setBirthDate(new java.sql.Date(rs.getTimestamp("BirthDate").getTime())); 
+//		
+//		
+//	//	obj.setBirthDate(rs.getDate("BirthDate"));
+//
+////
+//	//	String str = rs.getDate("BirthDate").toString(); //"2015-03-31";
+//	//	obj.setBirthDate( Date.valueOf(str));
+//	//    Date date=Date.valueOf(str);//converting string into sql date  
+//	//    System.out.println(date); 
+////		
+//		obj.setDepartment(dep);
+//		return obj;
+//	}
 
 	private Department instantiateDepartment(ResultSet rs) throws SQLException {
 		Department dep = new Department();

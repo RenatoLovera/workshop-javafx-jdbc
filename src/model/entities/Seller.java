@@ -3,6 +3,7 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+
 public class Seller implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,14 +52,14 @@ public class Seller implements Serializable {
 		this.email = email;
 	}
 
-	public Date getBirthDate() {
+	public java.util.Date getBirthDate() {
 		return birthDate;
 	}
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-
+	
 	public Double getBaseSalary() {
 		return baseSalary;
 	}
