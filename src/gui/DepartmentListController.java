@@ -99,7 +99,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			Pane pane = loader.load();
 
 			DepartmentFormController controller = loader.getController();
-			controller.setDepartmen(obj);
+			controller.setDepartment(obj);
 			controller.setDepartmentService(new DepartmentService());
 			controller.subscrebeDataChangeListener(this);
 			controller.updateFromData();
@@ -113,6 +113,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			dialogStage.showAndWait();
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}

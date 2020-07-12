@@ -47,7 +47,7 @@ public class DepartmentFormController implements Initializable {
 	@FXML
 	private Button btnCancel;
 	
-	public void setDepartmen(Department entity) {
+	public void setDepartment(Department entity) {
 		this.entity = entity;
 	}
 	
